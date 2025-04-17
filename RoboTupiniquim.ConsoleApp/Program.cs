@@ -3,45 +3,78 @@
     internal class Program
     {
 
-        // Entrada de dados e leitura do ponto de partida do robo
+        // Implementada a versão sequencial para movimentação do robô
 
         static void Main(string[] args)
         {
             string[,] matriz = new string[6, 6];
 
-            // Input de dados
-            Console.WriteLine("Digite as coordenadas X e Y do ponto de partida do robô");
-            Console.Write("Coordenada X: ");
-            int x = Convert.ToInt32(Console.ReadLine());
 
-            Console.Write("Coordenada Y: ");
-            int y = Convert.ToInt32(Console.ReadLine());
+            string posicaoInicial = "1 2 N";
+            string comando = "EMEMEMEMM";
 
-            Console.WriteLine();
-            Console.Write("Digite a orientação de partida, sendo N = norte, S = sul, L = leste, O = oeste");
-            Console.Write("Orientação: ");
-            char orientacao = Convert.ToChar(Console.ReadLine());
+            string[] coordenadasIniciais = posicaoInicial.Split(' '); // ["1", "2", "N"]
 
-            // Movimentação do robô
-            Console.WriteLine("Digite os comandos de movimentação do robô, ");
-            Console.WriteLine("E = Esquerda, D = Direita, M = Mover");
-            Console.Write("Comandos: ");
-            string comando = Console.ReadLine();
+            int posicaoX = Convert.ToInt32(coordenadasIniciais[0]); // 1 
+            int posicaoY = Convert.ToInt32(coordenadasIniciais[1]); // 2
+            char direcao = Convert.ToChar(coordenadasIniciais[2]); // N
 
-            comando = comando.ToLower();
+            char[] instrucoes = comando.ToCharArray();
 
-            char[] instrucao = comando.ToCharArray();
-
-            for(int i = 0;i < instrucao.Length; i++)
+            for (int i = 0; i < instrucoes.Length; i++)
             {
-                if (instrucao[i] == 'e')
-                {
+                char instrucaoAtual = instrucoes[i];
 
+                if (instrucaoAtual == 'E')
+                {
+                    if (direcao == 'N')
+                        direcao = 'O';
+
+                    else if (direcao == 'O')
+                        direcao = 'S';
+
+                    else if (direcao == 'S')
+                        direcao = 'L';
+
+                    else if (direcao == 'L')
+                        direcao = 'N';
+
+                }
+
+                else if (instrucaoAtual == 'D')
+                {
+                    if (direcao == 'N')
+                        direcao = 'L';
+
+                    else if (direcao == 'O')
+                        direcao = 'N';
+
+                    else if (direcao == 'S')
+                        direcao = 'O';
+
+                    else if (direcao == 'L')
+                        direcao = 'S';
+                }
+
+                else if (instrucaoAtual == 'M')
+                { 
+                    if (direcao == 'N')
+                        posicaoY++;
+
+                    else if (direcao == 'O')
+                        posicaoX--;
+
+                    else if (direcao == 'S')
+                        posicaoY--;
+
+                    else if (direcao == 'L')
+                        posicaoX++;
                 }
             }
 
-            Console.WriteLine(comando);
-            Console.ReadKey();
+            Console.WriteLine($"Posição final do Robô: {posicaoX} {posicaoY} {direcao}");
+            Console.ReadLine();
+
         }
     }
 }
